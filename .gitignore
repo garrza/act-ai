@@ -1,4 +1,5 @@
 venv/
 *.dylib
 *.so
-.env
+.envc
+__pycache__/
