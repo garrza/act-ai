@@ -9,7 +9,7 @@ class GmailService:
     def connect_to_gmail(self):
         # Set up Gmail API authentication
         flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-            "client_secret.json",
+            "credentials.json",
             scopes=["https://www.googleapis.com/auth/gmail.readonly"],
         )
         credentials = flow.run_local_server(port=0)

@@ -3,3 +3,4 @@ venv/
 *.so
 .envc
 __pycache__/
+credentials.json
