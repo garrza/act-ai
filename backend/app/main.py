@@ -1,35 +1,39 @@
-from flask import Flask
-from config import init_app, mongo
+import os
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from dotenv import load_dotenv
 from models.user import User, Task
+from core.agent import WebAgent
+from core.task_handler import TaskHandler
+from ai.task_recognition import TaskRecognition
+from lavague.core import WorldModel, ActionEngine
+from lavague.contexts.openai import OpenaiContext
+from lavague.drivers.selenium import SeleniumDriver as LavagueSeleniumDriver
+from config import mongo, init_app
+from google.oauth2 import id_token
+from google.auth.transport import requests
 
+# Load environment variables
+load_dotenv()
 
-def create_app():
-    app = Flask(__name__)
-    init_app(app)
-    return app
+app = Flask(__name__)
+CORS(app)
 
+# Initialize database
+init_app(app)
 
-app = create_app()
+# Initialize components
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    raise ValueError("OPENAI_API_KEY not found in environment variables")
 
-
-@app.route("/api/auth/google", methods=["POST"])
-def google_auth():
-    data = request.json
-    google_token = data.get("token")
-
-    # Verify the Google token (you'll need to implement this)
-    user_info = verify_google_token(google_token)
-
-    if not user_info:
-        return jsonify({"error": "Invalid token"}), 400
-
-    user = User.get_by_google_id(user_info["sub"])
-    if not user:
-        user_id = User.create(user_info["sub"], user_info["email"], user_info["name"])
-    else:
-        user_id = str(user["_id"])
-
-    return jsonify({"user_id": user_id, "name": user["name"], "email": user["email"]})
+context = OpenaiContext(api_key=api_key)
+selenium_driver = LavagueSeleniumDriver(headless=True)
+task_recognition = TaskRecognition(api_key=api_key)
+world_model = WorldModel.from_context(context)
+action_engine = ActionEngine.from_context(context, selenium_driver)
+agent = WebAgent(world_model, action_engine)
+task_handler = TaskHandler(agent, task_recognition)
 
 
 @app.route("/api/process_task", methods=["POST"])
@@ -44,6 +48,44 @@ def process_task():
 
     result = task_handler.execute_task(email_text, user_id)
     return jsonify({"result": result})
+
+
+@app.route("/api/auth/google", methods=["POST"])
+def google_auth():
+    data = request.json
+    google_token = data.get("token")
+
+    try:
+        client_id = os.getenv("GOOGLE_CLIENT_ID")
+        if not client_id:
+            raise ValueError("GOOGLE_CLIENT_ID not found in environment variables")
+
+        idinfo = id_token.verify_oauth2_token(
+            google_token, requests.Request(), client_id
+        )
+
+        user_info = {
+            "sub": idinfo["sub"],
+            "email": idinfo["email"],
+            "name": idinfo.get("name", ""),
+        }
+    except ValueError as e:
+        return jsonify({"error": str(e)}), 400
+
+    user = User.get_by_google_id(user_info["sub"])
+    if not user:
+        user_id = User.create(
+            user_info["sub"], user_info["email"], user_info["name"]
+        )
+    else:
+        user_id = str(user["_id"])
+
+    return jsonify({"user_id": user_id, "name": user_info["name"], "email": user_info["email"]})
+
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    mongo.session.remove()
 
 
 if __name__ == "__main__":
