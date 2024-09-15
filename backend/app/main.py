@@ -41,19 +41,26 @@ def process_task():
     email_text = data.get("email_text")
     user_id = data.get("user_id")
 
-    if not email_text or not user_id:
-        abort(400, description="Email text and user ID are required")
+    print(f"Received task for user: {user_id}")
 
-    user = User.get_by_id(user_id)
+    if not email_text or not user_id:
+        return jsonify({"error": "Email text and user ID are required"}), 400
+
+    user = User.get_by_google_id(user_id)
     if not user:
-        abort(404, description="User not found")
+        print(f"User not found for ID: {user_id}. Creating new user.")
+        # Create a new user with minimal information
+        User.create(user_id, "", "")
+        user = User.get_by_google_id(user_id)
+        if not user:
+            return jsonify({"error": "Failed to create user"}), 500
 
     try:
         result = task_handler.execute_task(email_text, user_id)
         return jsonify({"result": result})
     except Exception as e:
-        # Log the error here
-        abort(500, description="An error occurred while processing the task")
+        print(f"Error processing task: {str(e)}")
+        return jsonify({"error": "An error occurred while processing the task"}), 500
 
 
 @app.route("/api/auth/google", methods=["POST"])
@@ -81,7 +88,7 @@ def google_auth():
                 user_info["sub"], user_info["email"], user_info["name"]
             )
         else:
-            user_id = str(user["_id"])
+            user_id = user_info["sub"]
 
         return jsonify(
             {"user_id": user_id, "name": user_info["name"], "email": user_info["email"]}

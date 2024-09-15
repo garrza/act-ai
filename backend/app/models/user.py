@@ -11,40 +11,22 @@ logger = logging.getLogger(__name__)
 class User:
     @staticmethod
     def create(google_id, email, name):
-        try:
-            user = {"google_id": google_id, "email": email, "name": name}
-            result = mongo.db.users.insert_one(user)
-            logger.info(f"User created with ID: {result.inserted_id}")
-            return str(result.inserted_id)
-        except Exception as e:
-            logger.error(f"Error creating user: {e}")
-            return None
+        user = {
+            "google_id": google_id,
+            "email": email,
+            "name": name
+        }
+        result = mongo.db.users.insert_one(user)
+        logger.info(f"User created with ID: {result.inserted_id}")
+        return str(result.inserted_id)
 
     @staticmethod
     def get_by_google_id(google_id):
-        try:
-            user = mongo.db.users.find_one({"google_id": google_id})
-            if user:
-                logger.info(f"User found with Google ID: {google_id}")
-            else:
-                logger.info(f"No user found with Google ID: {google_id}")
-            return user
-        except Exception as e:
-            logger.error(f"Error getting user by Google ID: {e}")
-            return None
+        return mongo.db.users.find_one({"google_id": google_id})
 
     @staticmethod
     def get_by_id(user_id):
-        try:
-            user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
-            if user:
-                logger.info(f"User found with ID: {user_id}")
-            else:
-                logger.info(f"No user found with ID: {user_id}")
-            return user
-        except Exception as e:
-            logger.error(f"Error getting user by ID: {e}")
-            return None
+        return mongo.db.users.find_one({"google_id": user_id})
 
 
 class Task:
