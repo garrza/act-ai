@@ -1,0 +1,6 @@
+venv/
+*.dylib
+*.so
+.env
+__pycache__/
+credentials.json
