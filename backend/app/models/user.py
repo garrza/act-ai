@@ -1,7 +1,7 @@
 from bson import ObjectId
+from flask import current_app
 from config import mongo
 from datetime import datetime
-
 
 class User:
     @staticmethod
