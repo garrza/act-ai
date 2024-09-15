@@ -55,7 +55,7 @@ def google_auth():
     data = request.json
     google_token = data.get("token")
 
-    # For testing, accept any non-empty string as a valid token
+    # for testing, accept any non-empty string as a valid token
     if not google_token:
         return jsonify({"error": "Token is required"}), 400
 
