@@ -32,8 +32,3 @@ class GmailService:
             )
             emails.append(msg["snippet"])
         return emails
-    
-    def fetch_metadata(self):
-        result = self.service.users().getProfile(userId="me").execute()
-        metadata = (result.get("emailAddress"), result.get("name"))
-        return metadata

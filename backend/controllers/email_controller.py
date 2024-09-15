@@ -7,9 +7,3 @@ def read_emails():
         'status': 'success',
         'emails': emails
     }
-
-def metadata():
-    metadata = GmailService().fetch_metadata()
-    return {
-        'metadata': metadata
-    }
