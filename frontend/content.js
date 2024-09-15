@@ -1,5 +1,5 @@
 function addAutomateButton() {
-  const emailViews = document.querySelectorAll(".adn.ads");
+  const emailViews = document.querySelectorAll(".bHJ");
   emailViews.forEach((emailView) => {
     if (!emailView.querySelector(".act-ai-button")) {
       const button = document.createElement("button");
@@ -12,7 +12,7 @@ function addAutomateButton() {
 }
 
 function handleAutomateClick(event) {
-  const emailText = event.target.closest(".adn.ads").innerText;
+  const emailText = event.target.closest(".bHJ").innerText;
   chrome.runtime.sendMessage({ action: "authenticate" }, (response) => {
     if (response.success) {
       chrome.storage.local.get(["user"], function (result) {
