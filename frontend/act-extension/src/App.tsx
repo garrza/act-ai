@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box';
 
@@ -7,8 +9,23 @@ import GoogleIcon from './GoogleIcon.tsx';
 import './App.css';
 
 function App() {
+  const [isEmailOpen, setIsEmailOpen] = useState(false);
+
+
+  useEffect(() => {
+    alert('Listening for messages...');
+    chrome.runtime.onMessage.addListener((message) => {
+      alert('Message received:');
+      if (message.action === 'email_opened') {
+        console.log('Email opened!');
+        setIsEmailOpen(true);
+      } else {
+        setIsEmailOpen(false);
+      }
+    });
+  }, []);
+
   const handleClick = () => {
-    alert('Redirecting to Google...')
     chrome.tabs.create({ url: 'https://www.google.com' });
   }
   return (
@@ -54,6 +71,11 @@ function App() {
               <GoogleIcon />
             </Box>
           </Button>
+          {isEmailOpen ? (
+            <p style={{ color: 'green' }}>Email is open in Gmail!</p>
+          ) : (
+            <p style={{ color: 'red' }}>Email is not open.</p>
+          )}
         </Box>
       </Box>
     </>
