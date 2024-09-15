@@ -8,6 +8,9 @@ api_routes = Blueprint("api_routes", __name__)
 def read_emails():
     return email_controller.read_emails()
 
+@api_routes.route("/profile", methods=["GET"])
+def metadata():
+    return email_controller.metadata()
 
 @api_routes.route("/summarize-tasks", methods=["POST"])
 def summarize_tasks():
