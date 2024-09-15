@@ -1,33 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Button from '@mui/material/Button'
+import Box from '@mui/material/Box';
+
+import LogoAnimation from './LogoAnimation.tsx'
+import GoogleIcon from './GoogleIcon.tsx';
+
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const handleClick = () => {
+    alert('Redirecting to Google...')
+    chrome.tabs.create({ url: 'https://www.google.com' });
+  }
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '80vh',
+        flexDirection: 'column',
+        gap: '40px',
+      }}>
+        <LogoAnimation />
+        <Box textAlign={"center"} sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <Button
+            variant="outlined"
+            color="error"
+            size='large'
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '16px',
+              '&:focus': {
+                outline: 'none',
+                boxShadow: 'none',
+              },
+              '&:hover': {
+                borderColor: 'red',
+              },
+            }}
+            onClick={handleClick}>
+            SIGN IN WITH GOOGLE
+            <Box sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '100%'}}>
+              <GoogleIcon />
+            </Box>
+          </Button>
+        </Box>
+      </Box>
     </>
   )
 }
