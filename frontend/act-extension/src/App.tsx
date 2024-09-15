@@ -1,26 +1,27 @@
-import { useState, useEffect } from 'react'
-
-import Button from '@mui/material/Button'
+import { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-
-import LogoAnimation from './LogoAnimation.tsx'
+import LogoAnimation from './LogoAnimation.tsx';
 import GoogleIcon from './GoogleIcon.tsx';
-
 import './App.css';
 
 function App() {
   const [isEmailOpen, setIsEmailOpen] = useState(false);
 
-
+  // Fetch email open state from chrome.storage when the popup opens
   useEffect(() => {
-    alert('Listening for messages...');
-    chrome.runtime.onMessage.addListener((message) => {
-      alert('Message received:');
-      if (message.action === 'email_opened') {
-        console.log('Email opened!');
-        setIsEmailOpen(true);
-      } else {
-        setIsEmailOpen(false);
+    console.log('Popup opened, fetching email open state from storage...');
+    
+    chrome.storage.local.get(['isEmailOpen'], (result) => {
+      console.log('Stored email open state:', result.isEmailOpen);
+      setIsEmailOpen(result.isEmailOpen || false);  // Default to false if no state is found
+    });
+
+    // Optionally, listen for changes in storage to auto-update the UI
+    chrome.storage.onChanged.addListener((changes) => {
+      if (changes.isEmailOpen) {
+        console.log('Email open state changed:', changes.isEmailOpen.newValue);
+        setIsEmailOpen(changes.isEmailOpen.newValue);
       }
     });
   }, []);
@@ -28,6 +29,7 @@ function App() {
   const handleClick = () => {
     chrome.tabs.create({ url: 'https://www.google.com' });
   }
+
   return (
     <>
       <Box sx={{
@@ -79,7 +81,7 @@ function App() {
         </Box>
       </Box>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

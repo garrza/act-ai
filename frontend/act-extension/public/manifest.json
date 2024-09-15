@@ -5,7 +5,8 @@
     "description": "An AI assistant for your gmail that ACTs",
     "permissions": [
     "tabs",
-    "activeTab"
+    "activeTab",
+    "storage"
     ],
     "host_permissions": [
       "https://*/*",
@@ -14,9 +15,6 @@
     ],
     "action": {
       "default_popup": "index.html"
-    },
-    "background": {
-    "service_worker": "background.js"
     },
     "content_scripts": [
     {

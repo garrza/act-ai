@@ -1,23 +1,29 @@
-// Gmail URL pattern for viewing an individual email
 console.log('Content script loaded');
-const emailViewPattern = /https:\/\/mail\.google\.com\/mail\/u\/\d\/#inbox\/\w+/;
+
+// Gmail URL pattern for viewing an individual email
+const emailViewPattern = /#inbox\/[A-Za-z0-9]+/;
 
 const checkEmailView = () => {
+  console.log('Checking URL:', window.location.href);  // Debugging URL check
   if (emailViewPattern.test(window.location.href)) {
-    console.log('Email is open');
-    try {
-      chrome.runtime.sendMessage({ action: 'email_opened' });
-    } catch (error) {
-      console.error('Error sending message:', error);
-    }
+    console.log('Email is open, updating chrome.storage...');
+    chrome.storage.local.set({ isEmailOpen: true }, () => {
+      console.log('Stored email open state: true');
+    });
+  } else {
+    console.log('Email is not open, updating chrome.storage...');
+    chrome.storage.local.set({ isEmailOpen: false }, () => {
+      console.log('Stored email open state: false');
+    });
   }
 };
 
-// Check when the content script is loaded
+// Initial check when the content script is loaded
 checkEmailView();
 
 // Use MutationObserver to detect Gmail's AJAX-based navigation changes
 const observer = new MutationObserver(() => {
+  console.log('MutationObserver triggered');
   checkEmailView();
 });
 
