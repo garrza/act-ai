@@ -11,7 +11,8 @@ class PeopleService:
             "credentials.json",
             scopes=[
                 "https://www.googleapis.com/auth/userinfo.email",
-                "https://www.googleapis.com/auth/userinfo.profile"
+                "https://www.googleapis.com/auth/userinfo.profile",
+                "openid"  # Add this scope for OpenID Connect
             ]
         )
         credentials = flow.run_local_server(port=0)
@@ -24,7 +25,7 @@ class PeopleService:
         # Fetch user profile information
         result = self.service.people().get(
             resourceName="people/me",
-            personFields="names, emailAddresses"
+            personFields="names,emailAddresses"
         ).execute()
 
         # Extract name and email from the result
