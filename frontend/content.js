@@ -5,6 +5,13 @@ function addAutomateButton() {
       const button = document.createElement("button");
       button.textContent = "Automate with Act-AI";
       button.className = "act-ai-button";
+      button.style.color = "#d32f2f";
+      button.style.borderRadius = "4px";
+      button.style.border = "1px solid #d32f2f";
+      button.style.padding = "4px 8px";
+      button.style.marginLeft = "4px";
+      button.style.cursor = "pointer";
+      button.style.backgroundColor = "transparent";
       button.addEventListener("click", handleAutomateClick);
       emailView.appendChild(button);
     }
