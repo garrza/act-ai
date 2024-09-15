@@ -6,13 +6,20 @@
     "permissions": [
     "tabs",
     "activeTab",
-    "storage"
+    "storage",
+    "identity"
     ],
     "host_permissions": [
       "https://*/*",
-      "http://*/*",
-      "https://mail.google.com/*"
+      "http://*/*"
     ],
+    "oauth2": {
+    "client_id": "YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
     "action": {
       "default_popup": "index.html"
     },
