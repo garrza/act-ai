@@ -73,12 +73,12 @@ function App() {
               <GoogleIcon />
             </Box>
           </Button>
-          {isEmailOpen ? (
+        </Box>
+        {isEmailOpen ? (
             <p style={{ color: 'green' }}>Email is open in Gmail!</p>
           ) : (
             <p style={{ color: 'red' }}>Email is not open.</p>
           )}
-        </Box>
       </Box>
     </>
   );
