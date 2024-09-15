@@ -3,6 +3,11 @@
     "name": "Act-AI",
     "version": "1.0",
     "description": "Automate tasks with AI from your email",
+    "icons": {
+      "16": "./icons/icon.png",
+      "48": "./icons/icon.png",
+      "128": "./icons/icon.png"
+    },
     "permissions": [
       "activeTab",
       "storage",
