@@ -2,7 +2,7 @@
 
 ![ACT AI Logo](assets/logo.png)
 
-## 🚀 Revolutionize Your Browsing Experience
+## 🚀 Revolutionize Your Email Experience
 
 ACT AI is not just another Chrome extension—it's your personal AI assistant that seamlessly integrates with your web browsing, identifying and automating tasks with unprecedented accuracy and efficiency.
 
@@ -12,7 +12,7 @@ Powered by a state-of-the-art Large Action Model (LAM) and advanced computer vis
 
 ## 🌟 Key Features
 
-- **Intelligent Task Recognition**: ACT AI analyzes your browsing patterns and email content to identify actionable tasks.
+- **Intelligent Task Recognition**: ACT AI analyzes your email patterns and content to identify actionable tasks.
 - **Visual Understanding**: Our computer vision technology "sees" web pages like you do, understanding layouts, buttons, and interactive elements.
 - **Adaptive Automation**: The more you use ACT AI, the better it gets at predicting and executing your common tasks.
 - **Privacy-First Design**: Your data stays on your device. ACT AI's core functions work offline, ensuring your sensitive information remains private.
