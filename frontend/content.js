@@ -19,7 +19,13 @@ function addAutomateButton() {
 }
 
 function handleAutomateClick(event) {
-  const emailText = event.target.closest(".adn.ads").innerText;
+  const emailContainer = document.querySelector(".adn.ads");
+  if (!emailContainer) {
+    console.error("Email container not found");
+    return;
+  }
+  const emailText = emailContainer.innerText;
+  
   chrome.runtime.sendMessage({ action: "authenticate" }, (response) => {
     if (response.success) {
       chrome.storage.local.get(["user"], function (result) {
