@@ -1,0 +1,150 @@
+:root {
+    --red-color: #C71510;
+  }
+  
+  .logoAnimate {
+    cursor: pointer;
+  }
+  
+  /* Keyframes for the initial load animation */
+  @keyframes mailIconAnimation {
+    from {
+      transform: translateX(30%);
+    }
+    to {
+      transform: translateX(0%);
+    }
+  }
+  
+  @keyframes textVectorAnimation {
+    from {
+      transform: translateX(-15%);
+      fill: transparent;
+    }
+    to {
+      transform: translateX(0%);
+      fill: var(--red-color);
+    }
+  }
+  
+  /* Apply the animations on page load */
+  .textVectorAnimate {
+    fill: transparent;
+    animation: textVectorAnimation 0.75s ease-in-out 0.25s forwards; /* 0.25s delay for text */
+  }
+  
+  .mailIconAnimate {
+    stroke-width: 24px;
+    stroke: var(--red-color);
+    animation: mailIconAnimation 0.5s ease-in-out forwards;
+  }
+  
+  /* Ensure transition properties remain if you want to add more interactivity later */
+  .textVector, .mailIcon {
+    transition: all 0.5s ease;
+  }
+  
+  .ButtonExt{
+    --red-color: #C71510;
+    color-scheme: light dark;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    min-width: 64px;
+    background-color: var(--variant-outlinedBg);
+    color: var(--variant-outlinedColor);
+    --variant-textColor: #d32f2f;
+    --variant-outlinedColor: #d32f2f;
+    --variant-outlinedBorder: rgba(211, 47, 47, 1);
+    --variant-containedColor: #fff;
+    --variant-containedBg: #d32f2f;
+    font-size: 0.9375rem;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    outline: 0px;
+    margin: 0px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1), border-color 250ms cubic-bezier(0.4, 0, 0.2, 1), color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-color: var(--variant-outlinedBorder, currentColor);
+    padding: 7px 21px;
+    gap: 16px;
+  }
+
+  .ButtonExt:hover{
+    background-color: rgba(211, 47, 47, 0.05);
+    /* color: rgba(255, 255, 255, 1); */
+  }
+
+  .divButton{
+    --red-color: #C71510;
+    color-scheme: light dark;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    user-select: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    color: var(--variant-outlinedColor);
+    --variant-textColor: #d32f2f;
+    --variant-outlinedColor: #d32f2f;
+    --variant-outlinedBorder: rgba(211, 47, 47, 0.5);
+    --variant-containedColor: #fff;
+    --variant-containedBg: #d32f2f;
+    font-size: 0.9375rem;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    height: 100%;
+  }
+
+  /* .rippleButton{
+    --red-color: #C71510;
+    color-scheme: light dark;
+    font-synthesis: none;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+    user-select: none;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    line-height: 1.75;
+    letter-spacing: 0.02857em;
+    text-transform: uppercase;
+    color: var(--variant-outlinedColor);
+    --variant-textColor: #d32f2f;
+    --variant-outlinedColor: #d32f2f;
+    --variant-outlinedBorder: rgba(211, 47, 47, 0.5);
+    --variant-containedColor: #fff;
+    --variant-containedBg: #d32f2f;
+    font-size: 0.9375rem;
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+    z-index: 0;
+    inset: 0px;
+    border-radius: inherit;
+  } */
