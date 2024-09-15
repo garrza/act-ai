@@ -1,8 +1,7 @@
-from flask import Blueprint, request, jsonify
-from controllers import email_controller, task_controller, action_controller, people_controller
+from flask import Blueprint
+from controllers import email_controller, people_controller
 
 api_routes = Blueprint("api_routes", __name__)
-
 
 @api_routes.route("/read-emails", methods=["GET"])
 def read_emails():
@@ -11,14 +10,3 @@ def read_emails():
 @api_routes.route("/profile", methods=["GET"])
 def fetch_metadata():
     return people_controller.fetch_metadata()
-
-@api_routes.route("/summarize-tasks", methods=["POST"])
-def summarize_tasks():
-    email_data = request.json
-    return task_controller.summarize_tasks(email_data)
-
-
-@api_routes.route("/perform-task", methods=["POST"])
-def perform_task():
-    task_data = request.json
-    return action_controller.perform_task(task_data)

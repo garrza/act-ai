@@ -1,7 +1,5 @@
 import google_auth_oauthlib.flow
 import googleapiclient.discovery
-
-
 class GmailService:
     def __init__(self):
         self.service = self.connect_to_gmail()
